@@ -5,9 +5,9 @@ const { sendMails } = require('./src/mails')
 
 const app = express()
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
-app.get('/send', sendMails)
+app.post('/send', sendMails)
 
 if (module === require.main) {
   const PORT = process.env.PORT || 8080
