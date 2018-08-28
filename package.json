@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "gcloud app deploy",
     "dev": "node index.js"
   },
   "author": "Manuel Navarro Pérez",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "eslint": "^5.3.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
@@ -17,6 +19,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
+    "express": "^4.16.3",
     "prettier": "1.14.2"
   }
 }
