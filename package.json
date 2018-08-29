@@ -6,10 +6,6 @@
   "scripts": {
     "dev": "node index.js"
   },
-  "_moduleAliases": {
-    "@src": "src/",
-    "@config": "config/"
-  },
   "author": "Manuel Navarro Pérez",
   "license": "ISC",
   "dependencies": {

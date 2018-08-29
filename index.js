@@ -1,4 +1,11 @@
-require('module-alias/register')
+const path = require('path')
+const moduleAlias = require('module-alias')
+
+moduleAlias.addAliases({
+  '@src': path.join(__dirname, '/src/'),
+  '@config': path.join(__dirname, '/config/'),
+})
+
 const { sendMails } = require('@src/mails.js')
 const logger = require('@src/winston.js')
 
