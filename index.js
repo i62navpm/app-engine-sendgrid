@@ -1,20 +1,18 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+require('module-alias/register')
+const { sendMails } = require('@src/mails.js')
+const logger = require('@src/winston.js')
 
-const { sendMails } = require('./src/mails')
-
-const app = express()
-
-app.use(bodyParser.json())
-
-app.post('/send', sendMails)
-
-if (module === require.main) {
-  const PORT = process.env.PORT || 8080
-  app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`)
-    console.log('Press Ctrl+C to quit.')
-  })
+async function bulkSendEmail(data) {
+  logger.info('**** Starting to send the emails ****')
+  try {
+    const response = await sendMails(data)
+    return response
+  } catch (err) {
+    logger.error(err.message)
+    return err
+  } finally {
+    logger.info('**** Finish to send the emails ****')
+  }
 }
 
-module.exports = app
+module.exports = { bulkSendEmail }

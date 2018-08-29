@@ -1,15 +1,16 @@
 const sgMail = require('@sendgrid/mail')
-const { templateId } = require('../config')
+const { templateId } = require('@config')
+const logger = require('@src/winston.js')
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
 const SENDGRID_SENDER = process.env.SENDGRID_SENDER
 
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-function sendMails(req, res) {
-  req.body.users = req.body.users || []
+function sendMails({ users = [], listName = '' }) {
+  logger.info(`Sending emails with chanes in: [${listName}]....`)
 
-  const personalizations = req.body.users.map(user => ({
+  const personalizations = users.map(user => ({
     to: user.email,
     dynamic_template_data: {
       name: user.name,
@@ -20,17 +21,12 @@ function sendMails(req, res) {
     from: { email: SENDGRID_SENDER },
     templateId,
     dynamicTemplateData: {
-      listName: req.body.listName,
+      listName,
     },
     personalizations,
   }
 
-  sgMail
-    .sendMultiple(msg)
-    .then(
-      data => res.send(JSON.stringify({ sent: true, data })),
-      err => res.send(JSON.stringify({ sent: false, error: err.toString() }))
-    )
+  return sgMail.sendMultiple(msg)
 }
 
 module.exports = { sendMails }
