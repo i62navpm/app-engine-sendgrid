@@ -6,7 +6,7 @@ moduleAlias.addAliases({
   '@config': path.join(__dirname, '/config/'),
 })
 
-const { sendMails } = require('@src/mails.js')
+const { sendMails, sendNotificationsMails } = require('@src/mails.js')
 const logger = require('@src/winston.js')
 
 async function bulkSendEmail(data) {
@@ -22,4 +22,17 @@ async function bulkSendEmail(data) {
   }
 }
 
-module.exports = { bulkSendEmail }
+async function bulkSendNotificationsEmail(data) {
+  logger.info('**** Starting to send the emails ****')
+  try {
+    const response = await sendNotificationsMails(data)
+    return response
+  } catch (err) {
+    logger.error(err.message)
+    return err
+  } finally {
+    logger.info('**** Finish to send the emails ****')
+  }
+}
+
+module.exports = { bulkSendEmail, bulkSendNotificationsEmail }
