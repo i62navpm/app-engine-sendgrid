@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail')
-const { templateId } = require('@config')
+const { templateId, templateNotificationId } = require('@config')
 const logger = require('@src/winston.js')
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
@@ -45,7 +45,7 @@ function sendNotificationsMails({ users = [], listName = '' }) {
 
   const msg = {
     from: { email: SENDGRID_SENDER },
-    templateId,
+    templateNotificationId,
     dynamicTemplateData: {
       listName,
     },
