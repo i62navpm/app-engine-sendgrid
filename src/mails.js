@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail')
-const { templateId, templateNotificationId } = require('@config')
+const { templateId, templateNotificationId, listMap } = require('@config')
 const logger = require('@src/winston.js')
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
@@ -36,6 +36,8 @@ function sendNotificationsMails({ users = [], listName = '' }) {
     `Sending new lists notifications emails with changes in: [${listName}]....`
   )
 
+  listName = listMap[listName] || ''
+
   const personalizations = users.map(user => ({
     to: user.email,
     dynamic_template_data: {
@@ -45,7 +47,7 @@ function sendNotificationsMails({ users = [], listName = '' }) {
 
   const msg = {
     from: { email: SENDGRID_SENDER },
-    templateNotificationId,
+    templateId: templateNotificationId,
     dynamicTemplateData: {
       listName,
     },
