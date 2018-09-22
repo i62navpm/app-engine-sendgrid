@@ -36,10 +36,7 @@ function sendNotificationsMails({ users = [], listName = '' }) {
     `Sending new lists notifications emails with changes in: [${listName}]....`
   )
 
-  listName = listName
-    .split(',')
-    .map(item => listMap[item] || '')
-    .join(', ')
+  listName = listName.map(item => `${listMap[item]}` || '').join(', ')
 
   const personalizations = users.map(user => ({
     to: user.email,
