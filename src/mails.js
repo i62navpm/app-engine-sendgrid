@@ -36,6 +36,8 @@ function sendNotificationsMails({ users = [], listName = '' }) {
     `Sending new lists notifications emails with changes in: [${listName}]....`
   )
 
+  if (listName !== 'incorporateList') return true
+
   listName = listMap[listName]
 
   const personalizations = users.map(user => ({
