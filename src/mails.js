@@ -36,7 +36,7 @@ function sendNotificationsMails({ users = [], listName = '' }) {
     `Sending new lists notifications emails with changes in: [${listName}]....`
   )
 
-  if (listName !== 'incorporateList') return true
+  if (listName !== 'nextCitationList') return true
 
   listName = listMap[listName]
 
